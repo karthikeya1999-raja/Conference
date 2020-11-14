@@ -1,0 +1,33 @@
+.info{
+  margin-top: 3%;
+  margin-left: 3%;
+  top: 60%;
+  width: 50%;
+  overflow: auto;
+  text-align: center;
+  font-size: large;
+}
+
+button.a{
+  display: block;
+  margin-top: 30%;
+}
+
+.button{
+  position: absolute;
+  bottom: 20%;
+}
+
+.input{
+  position: absolute;
+  bottom: 40%;
+  left: 16%;
+  width: 60%;
+}
+
+button.b {
+  position: absolute;
+  display: block;
+  margin-top: 5%;
+  left: 30%;
+}

@@ -1,0 +1,87 @@
+<div class="container">
+
+  <h3>Schedule Your Meeting Here</h3>
+
+  <form class="form-group" #smform="ngForm" (ngSubmit)="submit(smform)">
+
+    <div class="row">
+      <div class="col-sm-5">
+        <label for="date">Select the Date</label>
+      </div>
+      <div class="col-sm-5">
+        <input type="date" id="date" name="date" ngModel required class="form-control">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        <label for="time">Set Time</label>
+      </div>
+      <div class="col-sm-5">
+        <input type="time" id="time" name="time" ngModel required class="form-control">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        <label for="duration">Set Duration</label>
+      </div>
+      <div class="col-sm-5">
+        <input type="time" id="duration" name="duration" ngModel required class="form-control">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        <label for="topic">Meeting Topic</label>
+      </div>
+      <div class="col-sm-5">
+        <input type="text" id="topic" name="topic" ngModel required class="form-control">
+      </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-2">
+        <button type="submit" class="btn btn-primary" [disabled]="!smform.valid">Submit</button>
+      </div>
+    </div>
+
+  </form>
+
+  <h3>Your Meetings</h3>
+
+  <div class="container">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Meeting Date</th>
+        <th>Meeting Time</th>
+        <th>Meeting Topic</th>
+        <th>Meeting Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>ebvjefjvbejv</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>owiefnkjer</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>kedjvlehrk</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</div>

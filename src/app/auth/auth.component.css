@@ -1,0 +1,45 @@
+label{
+  font-weight: 600;
+}
+
+.col-sm-12,
+.col-sm-6,
+.col-sm-2,
+.col-sm-10{
+  margin-top: 1.5%;
+}
+
+.col-sm-4{
+  margin-right: 8%;
+  margin-left: 8%;
+}
+
+small{
+  display: block;
+}
+
+.fa{
+  font-size: 35px;
+  margin-right: 0%;
+}
+
+.r1{
+  position: absolute;
+  right: 35%;
+  top: 20%;
+  width: 60%;
+}
+
+.r2{
+  position: absolute;
+  right: 35%;
+  top: 40%;
+  width: 60%;
+}
+
+.center{
+  position: absolute;
+  top: 30%;
+  left: 50%;
+}
+
