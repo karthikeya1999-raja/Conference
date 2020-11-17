@@ -1,3 +1,4 @@
+import { Meeting } from './meating.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { PostUser } from './post.model';
 import { AppUser } from './app-user.model';
@@ -55,24 +56,17 @@ export class StorageService {
       }
       else{
 
-        firebase.default.auth().deleteUser(user.uid)
-          .then(function () {
-            console.log('Successfully deleted user');
-          })
-          .catch(function (error) {
-            console.log('Error deleting user:', error);
-          });
-      //   for(const key in user){
-      //   if (user.hasOwnProperty(key)){
-      //     console.log(key," ---> ",user[key]);
-      //   }
-      // }
     }
     });
   }
 
-  storeUserShedule()
+  storeUserShedule(meetings : Meeting[])
   {
-
+    this.http.post<{name:string}>('https://samachar-b2961.firebaseio.com/users.json', meetings)
+      .subscribe(
+        response => {
+          console.log(response);
+        }
+      );
   }
 }

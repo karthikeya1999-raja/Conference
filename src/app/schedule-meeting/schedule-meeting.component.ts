@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../storage.service';
 //import { Subject } from 'rxjs';
 
 @Component({
@@ -16,7 +17,7 @@ export class ScheduleMeetingComponent implements OnInit {
   meetings : Meeting[] = [];
   //meetingSheduled = new Subject<Meeting[]>();
 
-  constructor(private athService : AuthService,private router : Router) { }
+  constructor(private athService : AuthService,private router : Router,private sservise : StorageService) { }
 
   submit(form : NgForm){
 
@@ -27,6 +28,7 @@ export class ScheduleMeetingComponent implements OnInit {
     var topic = form.value.topic;
     const meeting = new Meeting(date,time,dur,topic);
     this.meetings.push(meeting);
+    this.sservise.storeUserShedule(this.meetings);
     form.reset();
   }
 
