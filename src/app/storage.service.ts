@@ -55,18 +55,6 @@ export class StorageService {
       }
       else{
 
-        firebase.default.auth().deleteUser(user.uid)
-          .then(function () {
-            console.log('Successfully deleted user');
-          })
-          .catch(function (error) {
-            console.log('Error deleting user:', error);
-          });
-      //   for(const key in user){
-      //   if (user.hasOwnProperty(key)){
-      //     console.log(key," ---> ",user[key]);
-      //   }
-      // }
     }
     });
   }
