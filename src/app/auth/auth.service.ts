@@ -5,27 +5,22 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-
-export interface AuthResponseData {
-
-    idToken: string;
-    email: string;
-    refreshToken: string;
-    expiresIN: string;
-    localId: string;
-    registered: boolean;
-}
-
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
+    email : string;
     user = new BehaviorSubject<boolean>(null);
     admins = [];
     isAdmin = new BehaviorSubject<boolean>(null);
 
     constructor(private http: HttpClient,private afAuth : AngularFireAuth) { }
+
+    getEmail()
+    {
+      return this.email;
+    }
 
     doGoogleLogin(){
       return new Promise<any>((resolve, reject) => {
@@ -33,6 +28,7 @@ export class AuthService {
         this.afAuth.signInWithPopup(provider).then(res => {
           resolve(res);
           this.user.next(true);
+          this.email = res.user.email;
           return res;
         }, err => {
           console.log(err);
@@ -47,6 +43,7 @@ export class AuthService {
         this.afAuth.signInWithPopup(provider).then(res => {
             resolve(res);
             this.user.next(true);
+            this.email = res.user.email;
             return res;
           }, err => {
             console.log(err);
@@ -57,6 +54,7 @@ export class AuthService {
 
     signIn(email : string,password : string, admin : boolean){
 
+      this.email = email;
       var found = true;
       if(admin){
         for(var i=0;i<this.admins.length;i++){
@@ -85,6 +83,7 @@ export class AuthService {
     }
 
     signUp(email: string, password: string){
+      this.email = email;
        return this.afAuth.createUserWithEmailAndPassword(email,password).then(x => {
          console.log("signUp Success",x);
          this.user.next(true);

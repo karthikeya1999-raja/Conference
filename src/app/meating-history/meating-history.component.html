@@ -4,32 +4,20 @@
       <tr>
         <th>Meeting Date</th>
         <th>Meeting Time</th>
+        <th>Meeting Duration</th>
         <th>Meeting Topic</th>
         <th>Host Email</th>
         <th>Meeting Status</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>ebvjefjvbejv</td>
-        <td>john@example.com</td>
-        <td>ended</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>owiefnkjer</td>
-        <td>mary@example.com</td>
-        <td>yet to start</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>kedjvlehrk</td>
-        <td>july@example.com</td>
-        <td>yet to start</td>
+      <tr *ngFor="let meeting of meetings">
+        <td>{{meeting.meeting.mdate}}</td>
+        <td>{{meeting.meeting.time}}</td>
+        <td>{{meeting.meeting.duration}}</td>
+        <td>{{meeting.meeting.topic}}</td>
+        <td>{{meeting.email}}</td>
+        <td>{{meeting.status}}</td>
       </tr>
     </tbody>
   </table>

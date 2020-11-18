@@ -1,6 +1,22 @@
 export class Meeting{
-  constructor(private mdate : string,
-    private time : string,
-    private duraion : string,
-    private topic : string){}
+  constructor(public mdate : string,
+    public time : string,
+    public duration : string,
+    public topic : string){}
+
+    getDate(){
+      return this.mdate;
+    }
+
+    getTime(){
+      return this.time;
+    }
+
+    getDuration(){
+      return this.duration;
+    }
+
+    getTopic(){
+      return this.topic;
+    }
 }

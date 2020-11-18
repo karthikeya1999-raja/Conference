@@ -11,6 +11,8 @@ import * as firebase from 'firebase/app';
 })
 export class StorageService {
 
+  email : string;
+
   constructor(private http: HttpClient,private afAuth : AngularFireAuth) { }
 
   storeUserInfo(name: string, email: string, user: firebase.default.User,password? : string,)
@@ -60,13 +62,31 @@ export class StorageService {
     });
   }
 
-  storeUserShedule(meetings : Meeting[])
+  storeUserSchedule(meeting : Meeting,email : string)
   {
-    this.http.post<{name:string}>('https://samachar-b2961.firebaseio.com/users.json', meetings)
+    this.email = email;
+    var meating = {meeting,email};
+    console.log(meating);
+    this.http.post<{name:string}>('https://samachar-b2961.firebaseio.com/meetings.json', meating)
       .subscribe(
         response => {
           console.log(response);
         }
+      );
+  }
+
+  getUserSchedule()
+  {
+    return this.http.get<{meeting:Meeting,email:string}[]>('https://samachar-b2961.firebaseio.com/meetings.json')
+      .pipe(map(response => {
+        const meetingArray: { meeting:Meeting, email: string,id:string }[] = [];
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            meetingArray.push({ ...response[key], id: key });
+          }
+        }
+        return meetingArray;
+      })
       );
   }
 }
