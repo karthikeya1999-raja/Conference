@@ -17,6 +17,7 @@ import { MeatingHistoryComponent } from './meating-history/meating-history.compo
 import { UserManagementComponent } from './user-management/user-management.component';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
 import { MeetingComponent } from './meeting/meeting.component';
+import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MeetingComponent } from './meeting/meeting.component';
     MeatingHistoryComponent,
     UserManagementComponent,
     ScheduleMeetingComponent,
-    MeetingComponent
+    MeetingComponent,
+    MeetingEditComponent
   ],
   imports: [
     BrowserModule,

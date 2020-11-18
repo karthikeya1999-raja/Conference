@@ -1,17 +1,17 @@
 <div class="signin" *ngIf="isLoginMode">
 
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-12">
+    <div class="col-12">
       <h2>Sign In</h2>
     </div>
   </div><hr>
 
   <form class="form-group" #authForm="ngForm" (ngSubmit)="submit(authForm)">
     <div class="row">
-       <div class="col-sm-5">
+       <div class="col-5">
 
          <div class="row">
-           <div class="col-sm-10">
+           <div class="col-10">
              <label for="email">Email</label>
              <input type="email" class="form-control" placeholder="Email" id="email" required
               name="email" ngModel>
@@ -19,7 +19,7 @@
          </div>
 
          <div class="row">
-           <div class="col-sm-10">
+           <div class="col-10">
              <label for="pass">Password</label>
              <input type="password" class="form-control" placeholder="Password" id="pass" required
               name="password" ngModel minlength="6">
@@ -27,33 +27,33 @@
          </div>
 
          <div class="row">
-           <div class="col-sm-10">
+           <div class="col-10">
              <label for="admin"><input type="checkbox" name="admin" id="admin"
                ngModel> Are You admin ?</label>
            </div>
          </div>
 
          <div class="row">
-           <div class="col-sm-10">
+           <div class="col-10">
              <label for="ksign"><input type="checkbox" name="ksign" id="ksign"
               ngModel> Keep me signed in</label>
            </div>
          </div>
 
          <div class="row d-flex justify-content-center">
-           <div class="col-sm-5">
+           <div class="col-5">
               <button type="submit" class="btn btn-primary">Sign In</button>
            </div>
          </div>
 
          <div class="row">
-           <div class="col-sm-12">
+           <div class="col-12">
              <small><a href="#">Forgot Password ?</a></small>
            </div>
          </div>
 
          <div class="row d-flex justify-content-center">
-           <div class="col-sm-5">
+           <div class="col-5">
              <small>Not a User ??</small>
              <button type="button" class="btn btn-link btn-small"
              (click) = onSwitchMode()>Sign Up</button>
@@ -62,23 +62,23 @@
 
        </div>
 
-       <div class="col-xl-2 d-flex justify-content-center">
+       <div class="col-2 d-flex justify-content-center">
          <h3 class="center">Or</h3>
        </div>
 
-       <div class="col-sm-5">
+       <div class="col-5">
 
           <div class="row r1">
-            <div class="col-sm-10 d-flex justify-content-center">
+            <div class="col-10 d-flex justify-content-center">
                <button class="btn btn-primary" type="button" (click)=facebookLogin()>
-                 <span class="fa fa-lg fa-facebook"></span> Sign in with Facebook</button>
+                 <span class="fab fa-facebook-f fa-lg"></span> Sign in with Facebook</button>
             </div>
           </div>
 
           <div class="row r2">
-            <div class="col-sm-10 d-flex justify-content-center">
+            <div class="col-10 d-flex justify-content-center">
               <button class="btn btn-primary" type="button" (click)=googleLogin()>
-                <span class="fa fa-lg fa-google"></span> Sign in with Google</button>
+                <span class="fab fa-google fa-lg"></span> Sign in with Google</button>
             </div>
           </div>
 
@@ -91,7 +91,7 @@
 
 <div class="signup" *ngIf="!isLoginMode">
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-12">
+    <div class="col-12">
       <h2>Sign Up</h2>
     </div>
   </div>
@@ -100,13 +100,13 @@
 <form class="form-group" #authForm="ngForm" (ngSubmit)="submit(authForm)">
 
   <div class="row d-flex justify-content-center">
-      <div class="col-sm-4">
+      <div class="col-4">
         <label for="fname">First Name</label>
         <input type="text" name="fname" id="fname" class="form-control"
            placeholder="First Name" ngModel required>
      </div>
 
-     <div class="col-sm-4">
+     <div class="col-4">
           <label for="lname">Last Name</label>
           <input type="text" name="lname" id="lname" class="form-control"
             placeholder="Last Name" ngModel required>
@@ -114,7 +114,7 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-6">
+    <div class="col-6">
       <label for="email">Email</label>
         <input type="email" name="email" id="email" class="form-control"
          placeholder="Email" required ngModel>
@@ -122,7 +122,7 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-6">
+    <div class="col-6">
       <label for="pass">Password</label>
       <input type="password" id="pass" name="password" class="form-control"
            placeholder="Password" minlength="6" required ngModel>
@@ -130,7 +130,7 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-6">
+    <div class="col-6">
        <label for="conpass">Confirm Password</label>
       <input type="password" id="conpass" name="conpass" class="form-control"
           placeholder="Confirm Password" minlength="6" required ngModel>
@@ -138,13 +138,13 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-sm-2">
+    <div class="col-2">
       <button type="submit" class="btn btn-primary">Sign Up</button>
     </div>
   </div>
 
   <div class="row d-flex justify-content-center">
-     <div class="col-sm-3">
+     <div class="col-3">
       <small>Already have an account??
         <button class="btn btn-link btn-small" type="button"
         (click) = onSwitchMode()>Sign in</button></small>

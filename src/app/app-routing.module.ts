@@ -1,3 +1,4 @@
+import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
 import { DashbordComponent } from './dashbord/dashbord.component';
 import { UserManagementComponent } from './user-management/user-management.component';
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'management', component: UserManagementComponent},
   { path: 'history', component: MeatingHistoryComponent},
   { path: 'dashboard', component: DashbordComponent},
-  { path: 'schedule-meeting',component: ScheduleMeetingComponent}
+  { path: 'schedule-meeting',component: ScheduleMeetingComponent},
+  { path : ':id/edit-meeting', component:MeetingEditComponent}
 ];
 
 @NgModule({

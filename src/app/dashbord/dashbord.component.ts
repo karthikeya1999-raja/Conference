@@ -23,7 +23,7 @@ export class DashbordComponent implements OnInit {
 
     if(!this.isAdmin)
     {
-       this.router.navigate(['/home'])
+       this.router.navigate(['/home']);
     }
   }
 

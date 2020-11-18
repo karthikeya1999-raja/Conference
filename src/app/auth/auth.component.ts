@@ -26,17 +26,43 @@ export class AuthComponent implements OnInit {
 
   googleLogin(){
     this.authService.doGoogleLogin().then((x: firebase.default.auth.UserCredential) => {
-      this.sService.storeUserInfo(x.user.displayName, x.user.email,x.user);
-      console.log("Login Success");
-      this.router.navigate(['/home']);
+      this.sService.getUserInfo().subscribe(userArray => {
+        var found = false;
+        for (const key of userArray) {
+          if (x.user.email == key.email) {
+              found = true;
+          }
+        }
+        if(found){
+          console.log("Login Success");
+          this.router.navigate(['/home']);
+        }else{
+          this.sService.storeUserInfo(x.user.displayName,x.user.email,x.user);
+          console.log("Login Success");
+          this.router.navigate(['/home']);
+        }
+      });
     });
   }
 
   facebookLogin(){
     this.authService.doFaceBookLogin().then((x:firebase.default.auth.UserCredential) => {
-      this.sService.storeUserInfo(x.user.displayName, x.user.email,x.user);
-      console.log("Login Success");
-      this.router.navigate(['/home']);
+      this.sService.getUserInfo().subscribe(userArray => {
+        var found = false;
+        for (const key of userArray) {
+          if (x.user.email == key.email) {
+            found = true;
+          }
+        }
+        if (found) {
+          console.log("Login Success");
+          this.router.navigate(['/home']);
+        } else {
+          this.sService.storeUserInfo(x.user.displayName, x.user.email, x.user);
+          console.log("Login Success");
+          this.router.navigate(['/home']);
+        }
+      });
     });
   }
 

@@ -2,14 +2,14 @@ label{
   font-weight: 600;
 }
 
-.col-sm-12,
-.col-sm-6,
-.col-sm-2,
-.col-sm-10{
+.col-12,
+.col-6,
+.col-2,
+.col-10{
   margin-top: 1.5%;
 }
 
-.col-sm-4{
+.col-4{
   margin-right: 8%;
   margin-left: 8%;
 }
@@ -18,12 +18,12 @@ small{
   display: block;
 }
 
-.fa{
+.fab{
   font-size: 35px;
   margin-right: 0%;
 }
 
-.r1{
+ .r1{
   position: absolute;
   right: 35%;
   top: 20%;
@@ -37,7 +37,7 @@ small{
   width: 60%;
 }
 
-.center{
+ .center{
   position: absolute;
   top: 30%;
   left: 50%;

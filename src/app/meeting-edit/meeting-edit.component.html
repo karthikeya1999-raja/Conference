@@ -1,0 +1,54 @@
+<div class="container">
+
+  <h3>Schedule Your Meeting Here</h3>
+
+  <form class="form-group" [formGroup]="meetingForm" (ngSubmit)="submit()">
+
+    <div class="row">
+      <div class="col-5">
+        <label for="date">Select the Date</label>
+      </div>
+      <div class="col-5">
+        <input type="date" id="mDate" name="mDate" required class="form-control"
+        formControlName="mDate">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-5">
+        <label for="time">Set Time</label>
+      </div>
+      <div class="col-5">
+        <input type="time" id="mTime" name="mTime" required class="form-control"
+        formControlName="mTime">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-5">
+        <label for="duration">Set Duration</label>
+      </div>
+      <div class="col-5">
+        <input type="time" id="mDuration" name="mDuration" required class="form-control"
+        formControlName="mDuration">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-5">
+        <label for="topic">Meeting Topic</label>
+      </div>
+      <div class="col-5">
+        <input type="text" id="mTopic" name="mTopic" required class="form-control"
+        formControlName="mTopic">
+      </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-2">
+        <button type="submit" class="btn btn-primary" [disabled]="!meetingForm.valid">Submit</button>
+      </div>
+    </div>
+
+  </form>
+  </div>
