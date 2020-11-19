@@ -14,7 +14,7 @@ export class ScheduleMeetingComponent implements OnInit {
 
   isLogin = false;
   userEmail : string;
-  scheduling = true;
+  scheduling = false;
   meetings : {meeting:Meeting,email:string,id:string,status?:string}[] = [];
 
   constructor(private athService : AuthService,
@@ -24,11 +24,20 @@ export class ScheduleMeetingComponent implements OnInit {
 
   function(){
     this.scheduling = !this.scheduling;
-    this.mtService.getMyScheduleInfo();
   }
 
   editSchedule(index : number){
      this.router.navigate(['../'+index+'/edit-meeting'],{relativeTo: this.route});
+  }
+
+  generateMeetingId(){
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 20; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
   submit(form : NgForm){
@@ -38,8 +47,8 @@ export class ScheduleMeetingComponent implements OnInit {
     var time = form.value.time;
     var dur = form.value.duration;
     var topic = form.value.topic;
-    const meeting = new Meeting(date,time,dur,topic);
-    this.mtService.newMeeting(meeting,this.userEmail).subscribe(response => {
+    const meeting = new Meeting(date,time,dur,topic,this.generateMeetingId());
+    this.mtService.newMeeting(meeting).subscribe(response => {
       alert("Your Meeting Stored");
       console.log(response);
       this.router.navigate(['schedule-meeting']);
@@ -48,6 +57,8 @@ export class ScheduleMeetingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.mtService.getMyScheduleInfo();
     this.mtService.meetingsChanged.subscribe(meetings => {
       this.meetings = meetings;
     });

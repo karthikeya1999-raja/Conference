@@ -74,6 +74,7 @@ export class AuthService {
           this.user.next(true);
           return admin;
         }).catch(error => {
+          alert("You are not a user....\nPlease SignUp!!");
           console.log("Signin Failed",error);
         });
       }

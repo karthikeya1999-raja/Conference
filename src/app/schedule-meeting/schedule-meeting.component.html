@@ -59,7 +59,8 @@
     <button class="btn btn-primary" (click) = function() style="text-align: center;">New Meeting</button>
   </div>
 
-  <h3>Your Meetings</h3>
+  <div *ngIf="meetings.length>0; else elseBlock">
+    <h3>Your Meetings</h3>
   <table class="table table-hover table-striped">
     <thead>
       <tr>
@@ -67,6 +68,7 @@
         <th>Meeting Time</th>
         <th>Meeting Topic</th>
         <th>Meeting Duration</th>
+        <th>Meeting Id</th>
         <th>Meeting Status</th>
         <th>Edit</th>
       </tr>
@@ -77,11 +79,17 @@
         <td>{{meeting.meeting.time}}</td>
         <td>{{meeting.meeting.topic}}</td>
         <td>{{meeting.meeting.duration}}</td>
+        <td>{{meeting.meeting.meetingId}}</td>
         <td>{{meeting.status}}</td>
         <td><button class="fas fa-pen btn btn-danger" (click)=editSchedule(i)></button></td>
       </tr>
     </tbody>
   </table>
+  </div>
+  <ng-template #elseBlock>
+    <h3>You Have No Scheduled Meetings...</h3>
+  </ng-template>
+
 
 </div>
 

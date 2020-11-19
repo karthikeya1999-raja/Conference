@@ -1,7 +1,6 @@
 import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { StorageService } from './storage.service';
-import { Router } from '@angular/router';
 import { Meeting } from './meating.model';
 import { Injectable } from '@angular/core';
 
@@ -15,8 +14,7 @@ export class MeetingService{
   userEmail : string;
   meetingsChanged = new Subject<{meeting:Meeting,email:string,id:string,status?:string}[]>();
 
-  constructor(private router : Router,
-    private sservice : StorageService,
+  constructor(private sservice : StorageService,
     private athService : AuthService){}
 
   getMeeting(id : number){
@@ -24,12 +22,18 @@ export class MeetingService{
   }
 
   updateMeeting(meeting : Meeting,id : number){
+    meeting.meetingId = this.meetings[id].meeting.meetingId;
     this.meetings[id].meeting = meeting;
     return this.sservice.updateUserSchedule(meeting,this.meetings[id].id);
   }
 
-  newMeeting(meeting:Meeting,email:string){
-    return this.sservice.storeUserSchedule(meeting,email);
+  newMeeting(meeting:Meeting){
+    this.userEmail = this.athService.getEmail();
+    return this.sservice.storeUserSchedule(meeting,this.userEmail);
+  }
+
+  deleteMeeting(id : string){
+    return this.sservice.deleteUSerSchedule(id);
   }
 
   toNumberArray(arr: string[]) {

@@ -88,7 +88,7 @@ export class StorageService {
     return this.http.patch<Meeting>('https://samachar-b2961.firebaseio.com/meetings/'+id+'/meeting.json',meeting);
   }
 
-  deleteUSerSchedule(){
-
+  deleteUSerSchedule(id : string){
+    return this.http.delete('https://samachar-b2961.firebaseio.com/meetings/'+id+'.json');
   }
 }

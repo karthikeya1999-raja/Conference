@@ -1,3 +1,4 @@
+import { Meeting } from './../meating.model';
 import { AuthService } from './../auth/auth.service';
 import { MeetingService } from './../meeting.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
@@ -15,11 +16,19 @@ export class MeetingEditComponent implements OnInit {
   id: number;
   editMode = false;
   meetingForm : FormGroup;
+  meeting : {meeting: Meeting,email: string,id: string,status?: string};
 
   constructor(private rout: ActivatedRoute,
     private router: Router,
     private mtService : MeetingService,
     private authService : AuthService) { }
+
+  delete(){
+    this.mtService.deleteMeeting(this.meeting.id).subscribe(() => {
+      alert("Meeting Deleted Successfully");
+      this.router.navigate(['/schedule-meeting']);
+    });
+  }
 
   submit(){
     console.log(this.meetingForm.value);
@@ -37,7 +46,7 @@ export class MeetingEditComponent implements OnInit {
     let mTopic = '';
 
     if (this.editMode) {
-      const meeting = this.mtService.getMeeting(this.id);
+      const meeting = this.meeting;
       mDate = meeting.meeting.mdate;
       mTime = meeting.meeting.time;
       mDuration = meeting.meeting.duration;
@@ -66,6 +75,7 @@ export class MeetingEditComponent implements OnInit {
       this.rout.params.subscribe(
         (params: Params) => {
           this.id = +params['id'];
+          this.meeting = this.mtService.getMeeting(this.id);
           this.editMode = params['id'] != null;
           console.log(this.editMode);
           this.initform();
