@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-schedule-meeting',
@@ -21,7 +20,6 @@ export class ScheduleMeetingComponent implements OnInit {
   constructor(private athService : AuthService,
     private route : ActivatedRoute,
     private router : Router,
-    private sservise : StorageService,
     private mtService : MeetingService) { }
 
   function(){
@@ -41,7 +39,11 @@ export class ScheduleMeetingComponent implements OnInit {
     var dur = form.value.duration;
     var topic = form.value.topic;
     const meeting = new Meeting(date,time,dur,topic);
-    this.sservise.storeUserSchedule(meeting,this.userEmail);
+    this.mtService.newMeeting(meeting,this.userEmail).subscribe(response => {
+      alert("Your Meeting Stored");
+      console.log(response);
+      this.router.navigate(['schedule-meeting']);
+    });
     form.reset();
   }
 

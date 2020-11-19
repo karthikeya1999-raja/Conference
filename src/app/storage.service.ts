@@ -66,13 +66,7 @@ export class StorageService {
   {
     this.email = email;
     var meating = {meeting,email};
-    console.log(meating);
-    this.http.post<{name:string}>('https://samachar-b2961.firebaseio.com/meetings.json', meating)
-      .subscribe(
-        response => {
-          console.log(response);
-        }
-      );
+    return this.http.post<{name:string}>('https://samachar-b2961.firebaseio.com/meetings.json', meating);
   }
 
   getUserSchedule()
@@ -88,5 +82,13 @@ export class StorageService {
         return meetingArray;
       })
       );
+  }
+
+  updateUserSchedule(meeting : Meeting,id : string){
+    return this.http.patch<Meeting>('https://samachar-b2961.firebaseio.com/meetings/'+id+'/meeting.json',meeting);
+  }
+
+  deleteUSerSchedule(){
+
   }
 }

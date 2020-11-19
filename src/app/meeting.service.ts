@@ -23,12 +23,13 @@ export class MeetingService{
     return this.meetings[id];
   }
 
-  updateMeeting(meeting: { meeting: Meeting, email: string, id: string, status?: string },id:number){
-
+  updateMeeting(meeting : Meeting,id : number){
+    this.meetings[id].meeting = meeting;
+    return this.sservice.updateUserSchedule(meeting,this.meetings[id].id);
   }
 
-  newMeeting(meeting :{meeting:Meeting,email:string,id:string,status?:string}){
-
+  newMeeting(meeting:Meeting,email:string){
+    return this.sservice.storeUserSchedule(meeting,email);
   }
 
   toNumberArray(arr: string[]) {

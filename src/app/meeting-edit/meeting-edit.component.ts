@@ -23,7 +23,11 @@ export class MeetingEditComponent implements OnInit {
 
   submit(){
     console.log(this.meetingForm.value);
-    this.mtService.updateMeeting(this.meetingForm.value, this.id);
+    this.mtService.updateMeeting(this.meetingForm.value, this.id).subscribe(response => {
+      alert("Your Schedule Updated");
+      console.log(response);
+      this.router.navigate(['schedule-meeting']);
+    });
   }
 
   private initform() {
@@ -42,10 +46,10 @@ export class MeetingEditComponent implements OnInit {
     }
 
     this.meetingForm = new FormGroup({
-      'mDate': new FormControl(mDate, Validators.required),
-      'mTime': new FormControl(mTime, Validators.required),
-      'mDuration': new FormControl(mDuration, Validators.required),
-      'mTopic': new FormControl(mTopic, Validators.required)
+      'mdate': new FormControl(mDate, Validators.required),
+      'time': new FormControl(mTime, Validators.required),
+      'duration': new FormControl(mDuration, Validators.required),
+      'topic': new FormControl(mTopic, Validators.required)
     });
   }
 
