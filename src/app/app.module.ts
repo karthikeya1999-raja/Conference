@@ -18,6 +18,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
 import { MeetingComponent } from './meeting/meeting.component';
 import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
+import { ScheduleStartComponent } from './schedule-start/schedule-start.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
     UserManagementComponent,
     ScheduleMeetingComponent,
     MeetingComponent,
-    MeetingEditComponent
+    MeetingEditComponent,
+    ScheduleStartComponent
   ],
   imports: [
     BrowserModule,

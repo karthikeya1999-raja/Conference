@@ -14,3 +14,10 @@ h3{
   text-align: center;
   margin-top: 2%;
 }
+
+.btn-info{
+  background-color: #11baee;
+}
+.btn-info:hover{
+  background-color: #078bb3;
+}

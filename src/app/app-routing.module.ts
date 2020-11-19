@@ -1,3 +1,4 @@
+import { ScheduleStartComponent } from './schedule-start/schedule-start.component';
 import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
 import { DashbordComponent } from './dashbord/dashbord.component';
@@ -15,8 +16,12 @@ const routes: Routes = [
   { path: 'management', component: UserManagementComponent},
   { path: 'history', component: MeatingHistoryComponent},
   { path: 'dashboard', component: DashbordComponent},
-  { path: 'schedule-meeting',component: ScheduleMeetingComponent},
-  { path : ':id/edit-meeting', component:MeetingEditComponent}
+  { path: 'schedule-meeting', component: ScheduleStartComponent,
+    children: [
+      { path: '', component: ScheduleMeetingComponent},
+      { path: ':id/edit-meeting', component: MeetingEditComponent}
+    ]
+  }
 ];
 
 @NgModule({

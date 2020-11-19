@@ -27,7 +27,8 @@ export class ScheduleMeetingComponent implements OnInit {
   }
 
   editSchedule(index : number){
-     this.router.navigate(['../'+index+'/edit-meeting'],{relativeTo: this.route});
+     this.router.navigate([index+'/edit-meeting'],{relativeTo: this.route});
+    // this.router.navigate(['../' + index + '/edit-meeting'], { relativeTo: this.route });
   }
 
   generateMeetingId(){
@@ -51,9 +52,9 @@ export class ScheduleMeetingComponent implements OnInit {
     this.mtService.newMeeting(meeting).subscribe(response => {
       alert("Your Meeting Stored");
       console.log(response);
-      this.router.navigate(['schedule-meeting']);
+      this.mtService.getMyScheduleInfo();
+      form.reset();
     });
-    form.reset();
   }
 
   ngOnInit(): void {
