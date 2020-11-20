@@ -1,6 +1,6 @@
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-head',

@@ -35,11 +35,11 @@ export class AuthComponent implements OnInit {
         }
         if(found){
           console.log("Login Success");
-          this.router.navigate(['/home']);
+          this.router.navigate(['/user']);
         }else{
           this.sService.storeUserInfo(x.user.displayName,x.user.email,x.user);
           console.log("Login Success");
-          this.router.navigate(['/home']);
+          this.router.navigate(['/user']);
         }
       });
     });
@@ -56,11 +56,11 @@ export class AuthComponent implements OnInit {
         }
         if (found) {
           console.log("Login Success");
-          this.router.navigate(['/home']);
+          this.router.navigate(['/user']);
         } else {
           this.sService.storeUserInfo(x.user.displayName, x.user.email, x.user);
           console.log("Login Success");
-          this.router.navigate(['/home']);
+          this.router.navigate(['/user']);
         }
       });
     });
@@ -82,10 +82,10 @@ export class AuthComponent implements OnInit {
       try {
         this.authService.signIn(email, password, admin).then(isAdmin => {
           if (isAdmin) {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/admin']);
           }
           else {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/user']);
           }
         });
       } catch (error) {}
@@ -93,7 +93,7 @@ export class AuthComponent implements OnInit {
     else {
       this.authService.signUp(email, password).then((x:firebase.default.User) => {
         this.sService.storeUserInfo(fname+" "+lname, email,x, password);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/user']);
       });
     }
 

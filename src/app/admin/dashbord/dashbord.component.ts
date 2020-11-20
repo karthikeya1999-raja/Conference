@@ -1,5 +1,5 @@
+import { AuthService } from './../../auth/auth.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -23,7 +23,7 @@ export class DashbordComponent implements OnInit {
 
     if(!this.isAdmin)
     {
-       this.router.navigate(['/home']);
+       this.router.navigate(['/user']);
     }
   }
 

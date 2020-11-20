@@ -1,8 +1,8 @@
-import { MeetingService } from './../meeting.service';
-import { Meeting } from './../meating.model';
+import { MeetingService } from './../../meeting.service';
+import { Meeting } from './../../meating.model';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from './../auth/auth.service';
+import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

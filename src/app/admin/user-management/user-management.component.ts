@@ -1,8 +1,8 @@
-import { AuthService } from './../auth/auth.service';
-import { Router } from '@angular/router';
-import { PostUser } from './../post.model';
+import { AuthService } from './../../auth/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PostUser } from './../../post.model';
 import { Component, OnInit} from '@angular/core';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-user-management',
@@ -17,7 +17,12 @@ export class UserManagementComponent implements OnInit{
 
   constructor(private sService : StorageService,
     private router : Router,
-    private authService : AuthService) { }
+    private authService : AuthService,
+    private route : ActivatedRoute) { }
+
+  back(){
+    this.router.navigate(['../'],{relativeTo:  this.route});
+  }
 
   deleteUser(index : number)
   {

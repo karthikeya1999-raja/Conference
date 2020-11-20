@@ -1,8 +1,8 @@
-import { Meeting } from './../meating.model';
-import { Router } from '@angular/router';
-import { AuthService } from './../auth/auth.service';
+import { StorageService } from './../../storage.service';
+import { AuthService } from './../../auth/auth.service';
+import { Meeting } from './../../meating.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-meating-history',
@@ -14,7 +14,14 @@ export class MeatingHistoryComponent implements OnInit {
   isAdmin = false;
   meetings : {meeting:Meeting,email:string,id:string,status?:string}[] = []
 
-  constructor(private authService : AuthService,private router : Router,private sservice : StorageService) { }
+  constructor(private authService : AuthService,
+    private router : Router,
+    private sservice : StorageService,
+    private route : ActivatedRoute) { }
+
+  back(){
+    this.router.navigate(['../'],{relativeTo: this.route});
+  }
 
   toNumberArray(arr : string[]){
     var numArray : number[] = [];

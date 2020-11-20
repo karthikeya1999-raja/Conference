@@ -1,27 +1,12 @@
-import { ScheduleStartComponent } from './schedule-start/schedule-start.component';
-import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
-import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
-import { DashbordComponent } from './dashbord/dashbord.component';
-import { UserManagementComponent } from './user-management/user-management.component';
-import { MeatingHistoryComponent } from './meating-history/meating-history.component';
 import { AuthComponent } from './auth/auth.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './user/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'auth', component: AuthComponent },
-  { path: 'management', component: UserManagementComponent},
-  { path: 'history', component: MeatingHistoryComponent},
-  { path: 'dashboard', component: DashbordComponent},
-  { path: 'schedule-meeting', component: ScheduleStartComponent,
-    children: [
-      { path: '', component: ScheduleMeetingComponent},
-      { path: ':id/edit-meeting', component: MeetingEditComponent}
-    ]
-  }
+  { path: 'auth', component: AuthComponent }
 ];
 
 @NgModule({

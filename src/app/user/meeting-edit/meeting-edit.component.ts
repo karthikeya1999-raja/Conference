@@ -1,6 +1,6 @@
-import { Meeting } from './../meating.model';
-import { AuthService } from './../auth/auth.service';
-import { MeetingService } from './../meeting.service';
+import { Meeting } from './../../meating.model';
+import { AuthService } from './../../auth/auth.service';
+import { MeetingService } from './../../meeting.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
