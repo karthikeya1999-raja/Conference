@@ -1,8 +1,10 @@
+import  Peer ,{ MediaConnection} from 'peerjs';
+import { PeerService } from './peer.service';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { StorageService } from './storage.service';
 import { Meeting } from './meating.model';
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 
 
 @Injectable({
@@ -10,15 +12,36 @@ import { Injectable } from '@angular/core';
 })
 export class MeetingService{
 
+  peerId: string;
+  peer: Peer;
+  rmsg = new Subject<string>();
+  call = new Subject<boolean>();
+  pr = new Subject<string>();
+  isCallOn = false;
+  mdconn: MediaConnection;
+
   meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
   userEmail : string;
   meetingsChanged = new Subject<{meeting:Meeting,email:string,id:string,status?:string}[]>();
+  meetingId = new Subject<string>();
 
   constructor(private sservice : StorageService,
-    private athService : AuthService){}
+    private athService : AuthService,
+    private prService : PeerService){}
+
 
   getMeeting(id : number){
     return this.meetings[id];
+  }
+
+  generateMeetingId() {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 20; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
   updateMeeting(meeting : Meeting,id : number){
@@ -27,7 +50,7 @@ export class MeetingService{
     return this.sservice.updateUserSchedule(meeting,this.meetings[id].id);
   }
 
-  newMeeting(meeting:Meeting){
+  scheduleNewMeeting(meeting:Meeting){
     this.userEmail = this.athService.getEmail();
     return this.sservice.storeUserSchedule(meeting,this.userEmail);
   }
@@ -69,6 +92,79 @@ export class MeetingService{
         }
       }
       this.meetingsChanged.next(this.meetings);
+    });
+  }
+
+  getMeetingIdToJoin(meetingId : string){
+    this.meetingId.next(meetingId);
+  }
+
+  joinMeeting(receiver: string, ref: any, video: boolean) {
+    this.isCallOn = true;
+    console.log("Entered makeCall function");
+    var n = <any>navigator;
+    n.getUserMedia({ video: video, audio: true }, (stream) => {
+
+      console.log("Entered getUserMedia");
+
+      var peer = new Peer(this.generateMeetingId(), { host: 'localhost', port: 9000, path: '/' });
+      this.peer = peer;
+
+      console.log(peer.id+" to "+receiver);
+      const call = peer.call(receiver, stream);
+      call.on('stream', (remoteStream) => {
+
+        this.mdconn = call;
+        console.log("Entered call");
+
+        console.log("this is ref " + ref);
+          var vedio = ref.nativeElement
+          vedio.srcObject = remoteStream;
+          vedio.play();
+
+      });
+    }, (err) => {
+      console.error('Failed to get local stream', err);
+    });
+  }
+
+  createNewMeeting(meetingId : string,ref: any) {
+    console.log("Entered answer ",meetingId);
+
+    var peer = new Peer(meetingId, { host: 'localhost', port: 9000, path: '/' });
+    this.peer = peer;
+
+    peer.on('call', (call) => {
+
+      console.log("Entered peer.on");
+
+      if (confirm(call.peer + " is requesting to join meeting")){
+
+        var n = <any>navigator;
+        n.getUserMedia({ video: true, audio: true }, (stream) => {
+
+          console.log("Entered getUserMedia");
+          call.answer(stream);
+          call.on('stream', (remoteStream) => {
+
+            this.mdconn = call;
+            this.isCallOn = true;
+            this.call.next(this.isCallOn);
+            console.log("Entered call");
+
+            console.log("this is ref " + ref);
+
+            var vedio = ref.nativeElement
+            vedio.srcObject = remoteStream;
+            vedio.play();
+
+          });
+        }, (err) => {
+          console.error('Failed to get local stream', err);
+        });
+      }
+
+
     });
   }
 }

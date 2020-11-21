@@ -16,7 +16,7 @@ import { ScheduleStartComponent } from './schedule-start/schedule-start.componen
     MeetingComponent,
     MeetingEditComponent,
     ScheduleMeetingComponent,
-    ScheduleStartComponent
+    ScheduleStartComponent,
   ],
   imports: [
     CommonModule,

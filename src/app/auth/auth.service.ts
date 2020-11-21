@@ -11,6 +11,7 @@ import * as firebase from 'firebase/app';
 export class AuthService {
 
     email : string;
+    name : string;
     user = new BehaviorSubject<boolean>(null);
     admins = [];
     isAdmin = new BehaviorSubject<boolean>(null);
@@ -29,6 +30,7 @@ export class AuthService {
           resolve(res);
           this.user.next(true);
           this.email = res.user.email;
+          this.name = res.user.displayName;
           return res;
         }, err => {
           console.log(err);
@@ -44,6 +46,7 @@ export class AuthService {
             resolve(res);
             this.user.next(true);
             this.email = res.user.email;
+            this.name = res.user.displayName;
             return res;
           }, err => {
             console.log(err);
@@ -52,7 +55,7 @@ export class AuthService {
       });
     }
 
-    signIn(email : string,password : string, admin : boolean){
+    signIn(email : string,password : string, admin : boolean, name : string){
 
       this.email = email;
       var found = true;
@@ -72,6 +75,7 @@ export class AuthService {
         return this.afAuth.signInWithEmailAndPassword(email,password).then(x => {
           console.log("Signin Success",x);
           this.user.next(true);
+          this.name = name;
           return admin;
         }).catch(error => {
           alert("You are not a user....\nPlease SignUp!!");
@@ -83,11 +87,12 @@ export class AuthService {
       }
     }
 
-    signUp(email: string, password: string){
+    signUp(email: string, password: string, name : string){
       this.email = email;
        return this.afAuth.createUserWithEmailAndPassword(email,password).then(x => {
          console.log("signUp Success",x);
          this.user.next(true);
+         this.name = name;
          return x.user;
        }).catch(error => {
          console.log("SignUp failed",error);

@@ -80,7 +80,7 @@ export class AuthComponent implements OnInit {
     this.isLOading = true;
     if (this.isLoginMode) {
       try {
-        this.authService.signIn(email, password, admin).then(isAdmin => {
+        this.authService.signIn(email, password, admin, fname+" "+lname).then(isAdmin => {
           if (isAdmin) {
             this.router.navigate(['/admin']);
           }
@@ -91,7 +91,7 @@ export class AuthComponent implements OnInit {
       } catch (error) {}
     }
     else {
-      this.authService.signUp(email, password).then((x:firebase.default.User) => {
+      this.authService.signUp(email, password, fname+" "+lname).then((x:firebase.default.User) => {
         this.sService.storeUserInfo(fname+" "+lname, email,x, password);
         this.router.navigate(['/user']);
       });

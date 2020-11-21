@@ -20,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     AuthComponent,
     HeadComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

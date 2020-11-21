@@ -1,3 +1,4 @@
+import { MeetingComponent } from './meeting/meeting.component';
 import { MeetingEditComponent } from './meeting-edit/meeting-edit.component';
 import { ScheduleStartComponent } from './schedule-start/schedule-start.component';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent,
     children: [
       {path: '', component: HomeComponent},
+      {path: 'meeting', component: MeetingComponent}
     ]},
   { path: 'schedule-meeting', component: ScheduleStartComponent,
     children: [

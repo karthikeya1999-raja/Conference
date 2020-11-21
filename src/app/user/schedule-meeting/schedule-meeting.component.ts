@@ -31,15 +31,6 @@ export class ScheduleMeetingComponent implements OnInit {
     // this.router.navigate(['../' + index + '/edit-meeting'], { relativeTo: this.route });
   }
 
-  generateMeetingId(){
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < 20; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
 
   submit(form : NgForm){
 
@@ -48,8 +39,8 @@ export class ScheduleMeetingComponent implements OnInit {
     var time = form.value.time;
     var dur = form.value.duration;
     var topic = form.value.topic;
-    const meeting = new Meeting(date,time,dur,topic,this.generateMeetingId());
-    this.mtService.newMeeting(meeting).subscribe(response => {
+    const meeting = new Meeting(date,time,dur,topic,this.mtService.generateMeetingId());
+    this.mtService.scheduleNewMeeting(meeting).subscribe(response => {
       alert("Your Meeting Stored");
       console.log(response);
       this.mtService.getMyScheduleInfo();
