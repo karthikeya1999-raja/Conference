@@ -1,3 +1,5 @@
+import  Peer  from 'peerjs';
+import { AuthService } from './../../auth/auth.service';
 ;import { MeetingService } from './../../meeting.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -10,23 +12,51 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   meetingId : string;
-  @ViewChild('video') video ;
+  @ViewChild('mvideo') mvideo ;
+  @ViewChild('rvideo') rvideo;
   name : string;
+  isLogin = false;
+  peer : Peer;
+  mdconn : any;
 
   constructor(private router : Router,
     private mtService : MeetingService,
+    private atService : AuthService
     ){ }
 
   newMeeting(){
     this.router.navigate(['/user/meeting']);
   }
 
+  changeVideo(){
+    this.mtService.changeVideo();
+  }
+
+  changeAudio(){
+    this.mtService.changeAudio();
+  }
+
+  end(){
+    if (confirm("Sure to leave Meeting !?")){
+      if(this.isLogin){
+        this.router.navigate(['/user']);
+      }else{
+        this.router.navigate(['/home']);
+      }
+    }
+  }
+
+
   joinMeeting(){
 
     console.log(this.meetingId);
-    document.getElementById('video').style.display = "block";
+    document.getElementById('mvideo').style.display = "block";
+    document.getElementById('rvideo').style.display = "block";
+    document.getElementById('btn1').style.display = "inline-block";
+    document.getElementById('btn2').style.display = "inline-block";
+    document.getElementById('btn3').style.display = "inline-block";
     document.getElementById('home').style.display = "none";
-    this.mtService.joinMeeting(this.meetingId,this.video,true);
+    this.mtService.joinMeeting(this.meetingId,this.mvideo,this.rvideo);
   }
 
   scheduleMeeting(){
@@ -34,6 +64,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.atService.user.subscribe(login => {
+      this.isLogin = login;
+    });
   }
 
 }

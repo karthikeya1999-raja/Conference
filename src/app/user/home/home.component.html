@@ -1,5 +1,19 @@
 <div class="container">
-  <video #video id="video" style="display: none;"></video>
+  <div class="row">
+    <div class="col-5">
+       <video #mvideo id="mvideo" name="video" style="display: none; width:100%"></video>
+    </div>
+    <div class="col-5">
+       <video #rvideo id="rvideo" name="video" style="display: none; width:100%"></video>
+    </div>
+  </div>
+
+  <button class="btn btn-primary fas fa-microphone" id="btn1" style="display: none;"
+  (click)=changeAudio()></button>
+  <button class="btn btn-primary fas fa-video" id="btn2" style="display: none;"
+  (click)=changeVideo()></button>
+  <button class="btn btn-danger fas fa-phone-alt" id="btn3" style="display: none;"
+  (click)=end()></button>
 </div>
 
 <div class="container" id="home">

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { StorageService } from './storage.service';
 import { Meeting } from './meating.model';
-import { Injectable, ElementRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 
 @Injectable({
@@ -15,10 +15,12 @@ export class MeetingService{
   peerId: string;
   peer: Peer;
   rmsg = new Subject<string>();
-  call = new Subject<boolean>();
-  pr = new Subject<string>();
-  isCallOn = false;
   mdconn: MediaConnection;
+  video = true;
+  audio = true;
+
+  videoTrack : MediaStreamTrack;
+  audioTrack : MediaStreamTrack;
 
   meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
   userEmail : string;
@@ -99,72 +101,105 @@ export class MeetingService{
     this.meetingId.next(meetingId);
   }
 
-  joinMeeting(receiver: string, ref: any, video: boolean) {
-    this.isCallOn = true;
+  getVideo(){
+    return this.video;
+  }
+
+  getAudio(){
+    return this.audio;
+  }
+
+  changeVideo(){
+    this.videoTrack.enabled = !this.videoTrack.enabled;
+  }
+
+  changeAudio(){
+    this.audioTrack.enabled = !this.audioTrack.enabled;
+  }
+
+  joinMeeting(receiver: string, mref: any, rref : any) {
+
     console.log("Entered makeCall function");
     var n = <any>navigator;
-    n.getUserMedia({ video: video, audio: true }, (stream) => {
 
-      console.log("Entered getUserMedia");
+    var peer = new Peer(this.generateMeetingId(), { host: 'localhost', port: 9000, path: '/' });
+    this.peer = peer;
 
-      var peer = new Peer(this.generateMeetingId(), { host: 'localhost', port: 9000, path: '/' });
-      this.peer = peer;
+    n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
+    n.getUserMedia({ video: this.getVideo(), audio: this.getAudio() }, (stream : MediaStream) => {
 
-      console.log(peer.id+" to "+receiver);
+     // console.log("Entered getUserMedia");
+
+      this.audioTrack = stream.getTracks()[0];
+      this.videoTrack = stream.getTracks()[1];
+
+      console.log(stream.getTracks());
+
+      //console.log(peer.id+" to "+receiver);
+
       const call = peer.call(receiver, stream);
-      call.on('stream', (remoteStream) => {
 
-        this.mdconn = call;
-        console.log("Entered call");
+      var vedio = mref.nativeElement;
+      vedio.srcObject = stream;
+      vedio.play();
 
-        console.log("this is ref " + ref);
-          var vedio = ref.nativeElement
+        call.on('stream', (remoteStream) => {
+
+          this.mdconn = call;
+          //console.log("Entered call");
+
+          var vedio = rref.nativeElement
           vedio.srcObject = remoteStream;
           vedio.play();
 
-      });
+        })
     }, (err) => {
       console.error('Failed to get local stream', err);
     });
   }
 
-  createNewMeeting(meetingId : string,ref: any) {
+  createNewMeeting(meetingId : string,rref: any,mref : any) {
     console.log("Entered answer ",meetingId);
 
-    var peer = new Peer(meetingId, { host: 'localhost', port: 9000, path: '/' });
+    var peer = new Peer(meetingId,{ host: 'localhost', port: 9000, path: '/' });
     this.peer = peer;
 
     peer.on('call', (call) => {
 
-      console.log("Entered peer.on");
+     // console.log("Entered peer.on");
 
       if (confirm(call.peer + " is requesting to join meeting")){
 
-        var n = <any>navigator;
-        n.getUserMedia({ video: true, audio: true }, (stream) => {
+        var n = <any>navigator
+        n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
+        n.getUserMedia({ video: this.getVideo(), audio: this.getAudio() }, (stream : MediaStream) => {
 
-          console.log("Entered getUserMedia");
-          call.answer(stream);
-          call.on('stream', (remoteStream) => {
+           // console.log("Entered getUserMedia");
 
-            this.mdconn = call;
-            this.isCallOn = true;
-            this.call.next(this.isCallOn);
-            console.log("Entered call");
+          this.audioTrack = stream.getTracks()[0];
+          this.videoTrack = stream.getTracks()[1];
 
-            console.log("this is ref " + ref);
+          console.log(stream.getTracks());
 
-            var vedio = ref.nativeElement
-            vedio.srcObject = remoteStream;
+            call.answer(stream);
+            var vedio = mref.nativeElement;
+            vedio.srcObject = stream;
             vedio.play();
 
+              call.on('stream', (remoteStream) => {
+
+                this.mdconn = call;
+               // console.log("Entered call");
+
+                var vedio = rref.nativeElement
+                vedio.srcObject = remoteStream;
+                vedio.play();
+
+              });
+          }, (err) => {
+            console.error('Failed to get local stream', err);
           });
-        }, (err) => {
-          console.error('Failed to get local stream', err);
-        });
       }
-
-
     });
   }
 }

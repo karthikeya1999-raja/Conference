@@ -1,3 +1,14 @@
 <div class="container">
-  <video id="video" #video></video>
+  <div class="row">
+    <div class="col-5">
+       <video class="video" #mvideo name="video" style="width: 100%;"></video>
+    </div>
+    <div class="col-5">
+       <video class="video" #rvideo name="video" style="width: 100%;"></video>
+    </div>
+  </div>
+
+  <button class="btn btn-primary fas fa-microphone video" (click)=changeAudio()></button>
+  <button class="btn btn-primary fas fa-video video" (click)=changeVideo()></button>
+  <button class="btn btn-danger fas fa-phone-alt video" (click)=end()></button>
 </div>

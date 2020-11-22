@@ -1,3 +1,4 @@
+import  Peer  from 'peerjs';
 import { MeetingService } from './../../meeting.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
@@ -13,12 +14,25 @@ export class MeetingComponent implements OnInit {
 
   isLogin : boolean;
 
-  @ViewChild('video') video ;
+  @ViewChild('mvideo') mvideo ;
+  @ViewChild('rvideo') rvideo;
 
-  constructor(private prService : PeerService,
-    private authService : AuthService,
+  constructor(private authService : AuthService,
     private router : Router,
     private mtService : MeetingService) { }
+
+  changeVideo(){
+    this.mtService.changeVideo();
+  }
+
+  changeAudio(){
+    this.mtService.changeAudio();
+  }
+  end(){
+    if(confirm("Sure to leave Meeting")){
+      this.router.navigate(['/user']);
+    }
+  }
 
   ngOnInit(): void {
 
@@ -32,7 +46,7 @@ export class MeetingComponent implements OnInit {
       alert("Please Login to Host Meeting");
       this.router.navigate(['/home']);
     } else {
-      this.mtService.createNewMeeting(this.mtService.generateMeetingId(), this.video);
+      this.mtService.createNewMeeting(this.mtService.generateMeetingId(), this.rvideo,this.mvideo);
     }
   }
 
