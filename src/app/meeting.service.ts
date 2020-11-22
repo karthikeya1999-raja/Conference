@@ -1,5 +1,4 @@
 import  Peer ,{ MediaConnection} from 'peerjs';
-import { PeerService } from './peer.service';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { StorageService } from './storage.service';
@@ -18,7 +17,6 @@ export class MeetingService{
   mdconn: MediaConnection;
   video = true;
   audio = true;
-
   videoTrack : MediaStreamTrack;
   audioTrack : MediaStreamTrack;
 
@@ -28,8 +26,7 @@ export class MeetingService{
   meetingId = new Subject<string>();
 
   constructor(private sservice : StorageService,
-    private athService : AuthService,
-    private prService : PeerService){}
+    private athService : AuthService){}
 
 
   getMeeting(id : number){
@@ -97,9 +94,6 @@ export class MeetingService{
     });
   }
 
-  getMeetingIdToJoin(meetingId : string){
-    this.meetingId.next(meetingId);
-  }
 
   getVideo(){
     return this.video;
@@ -128,14 +122,11 @@ export class MeetingService{
     n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
     n.getUserMedia({ video: this.getVideo(), audio: this.getAudio() }, (stream : MediaStream) => {
 
-     // console.log("Entered getUserMedia");
 
       this.audioTrack = stream.getTracks()[0];
       this.videoTrack = stream.getTracks()[1];
 
       console.log(stream.getTracks());
-
-      //console.log(peer.id+" to "+receiver);
 
       const call = peer.call(receiver, stream);
 
@@ -146,7 +137,6 @@ export class MeetingService{
         call.on('stream', (remoteStream) => {
 
           this.mdconn = call;
-          //console.log("Entered call");
 
           var vedio = rref.nativeElement
           vedio.srcObject = remoteStream;
@@ -166,7 +156,6 @@ export class MeetingService{
 
     peer.on('call', (call) => {
 
-     // console.log("Entered peer.on");
 
       if (confirm(call.peer + " is requesting to join meeting")){
 
@@ -174,22 +163,20 @@ export class MeetingService{
         n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
         n.getUserMedia({ video: this.getVideo(), audio: this.getAudio() }, (stream : MediaStream) => {
 
-           // console.log("Entered getUserMedia");
 
           this.audioTrack = stream.getTracks()[0];
           this.videoTrack = stream.getTracks()[1];
 
           console.log(stream.getTracks());
 
-            call.answer(stream);
-            var vedio = mref.nativeElement;
-            vedio.srcObject = stream;
-            vedio.play();
+          call.answer(stream);
+          var vedio = mref.nativeElement;
+          vedio.srcObject = stream;
+          vedio.play();
 
               call.on('stream', (remoteStream) => {
 
                 this.mdconn = call;
-               // console.log("Entered call");
 
                 var vedio = rref.nativeElement
                 vedio.srcObject = remoteStream;

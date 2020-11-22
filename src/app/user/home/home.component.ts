@@ -12,12 +12,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   meetingId : string;
-  @ViewChild('mvideo') mvideo ;
+  @ViewChild('mvideo') mvideo;
   @ViewChild('rvideo') rvideo;
   name : string;
   isLogin = false;
-  peer : Peer;
-  mdconn : any;
 
   constructor(private router : Router,
     private mtService : MeetingService,
@@ -64,9 +62,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.atService.user.subscribe(login => {
       this.isLogin = login;
     });
+
   }
 
 }

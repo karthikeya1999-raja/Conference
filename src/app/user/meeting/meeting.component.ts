@@ -1,8 +1,6 @@
-import  Peer  from 'peerjs';
 import { MeetingService } from './../../meeting.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
-import { PeerService } from './../../peer.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -14,8 +12,9 @@ export class MeetingComponent implements OnInit {
 
   isLogin : boolean;
 
-  @ViewChild('mvideo') mvideo ;
+  @ViewChild('mvideo') mvideo;
   @ViewChild('rvideo') rvideo;
+  videoStreams = [];
 
   constructor(private authService : AuthService,
     private router : Router,
@@ -39,9 +38,11 @@ export class MeetingComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+
     this.authService.user.subscribe(login => {
       this.isLogin = login;
     });
+
     if (!this.isLogin) {
       alert("Please Login to Host Meeting");
       this.router.navigate(['/home']);
