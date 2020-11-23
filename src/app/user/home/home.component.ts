@@ -1,4 +1,3 @@
-import  Peer  from 'peerjs';
 import { AuthService } from './../../auth/auth.service';
 ;import { MeetingService } from './../../meeting.service';
 import { Router } from '@angular/router';
@@ -49,15 +48,15 @@ export class HomeComponent implements OnInit {
 
     console.log(this.meetingId);
     var name = prompt("Enter Your Name");
-    if(name.length!=0){
+    if (name.length != 0) {
       document.getElementById('mvideo').style.display = "block";
       document.getElementById('rvideo').style.display = "block";
       document.getElementById('btn1').style.display = "inline-block";
       document.getElementById('btn2').style.display = "inline-block";
       document.getElementById('btn3').style.display = "inline-block";
       document.getElementById('home').style.display = "none";
-      this.mtService.joinMeeting(this.meetingId,name,this.mvideo,this.rvideo);
-    }else{
+      this.mtService.joinMeeting(this.meetingId, name, this.mvideo, this.rvideo);
+    } else {
       alert("You must Enter your name");
     }
   }

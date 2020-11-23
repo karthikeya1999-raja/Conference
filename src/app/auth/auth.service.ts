@@ -55,7 +55,7 @@ export class AuthService {
       });
     }
 
-    signIn(email : string,password : string, admin : boolean, name : string){
+    signIn(email : string,password : string, admin : boolean){
 
       this.email = email;
       var found = true;
@@ -75,7 +75,6 @@ export class AuthService {
         return this.afAuth.signInWithEmailAndPassword(email,password).then(x => {
           console.log("Signin Success",x);
           this.user.next(true);
-          this.name = name;
           return admin;
         }).catch(error => {
           alert("You are not a user....\nPlease SignUp!!");
@@ -87,12 +86,11 @@ export class AuthService {
       }
     }
 
-    signUp(email: string, password: string, name : string){
+    signUp(email: string, password: string){
       this.email = email;
        return this.afAuth.createUserWithEmailAndPassword(email,password).then(x => {
          console.log("signUp Success",x);
          this.user.next(true);
-         this.name = name;
          return x.user;
        }).catch(error => {
          console.log("SignUp failed",error);
