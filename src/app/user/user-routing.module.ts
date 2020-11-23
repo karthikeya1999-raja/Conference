@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'schedule-meeting', component: ScheduleStartComponent,
     children: [
       { path: '', component: ScheduleMeetingComponent },
-      { path: ':id/edit-meeting', component: MeetingEditComponent }
+      { path: ':id/edit-meeting', component: MeetingEditComponent },
+      { path: ':id/start-meeting', component: MeetingComponent}
     ]}
 ];
 

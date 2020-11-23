@@ -27,8 +27,11 @@ export class ScheduleMeetingComponent implements OnInit {
   }
 
   editSchedule(index : number){
-     this.router.navigate([index+'/edit-meeting'],{relativeTo: this.route});
-    // this.router.navigate(['../' + index + '/edit-meeting'], { relativeTo: this.route });
+    this.router.navigate([index+'/edit-meeting'],{relativeTo: this.route});
+  }
+
+  startMeeting(i : number){
+    this.router.navigate([i+'/start-meeting'],{relativeTo: this.route});
   }
 
 

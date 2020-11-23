@@ -70,6 +70,7 @@
         <th>Meeting Duration</th>
         <th>Meeting Id</th>
         <th>Meeting Status</th>
+        <th>Start Meeting</th>
         <th>Edit</th>
       </tr>
     </thead>
@@ -81,6 +82,8 @@
         <td>{{meeting.meeting.duration}}</td>
         <td>{{meeting.meeting.meetingId}}</td>
         <td>{{meeting.status}}</td>
+        <td><button class="btn btn-success" (click)=startMeeting(i) id="smb"
+                [disabled]="meeting.status=='Ended'||meeting.status=='On Going'">Start</button></td>
         <td><button class="fas fa-pen btn btn-info" (click)=editSchedule(i)></button></td>
       </tr>
     </tbody>

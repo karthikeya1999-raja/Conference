@@ -1,16 +1,20 @@
+import { Meeting } from './../../meating.model';
 import { MeetingService } from './../../meeting.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-meeting',
   templateUrl: './meeting.component.html',
   styleUrls: ['./meeting.component.css']
 })
-export class MeetingComponent implements OnInit {
+export class MeetingComponent implements OnInit, AfterViewInit {
 
   isLogin : boolean;
+  id : number;
+  meetingId : string;
+  meetings : {meeting:Meeting,email:string,id:string,status?:string}[];
 
   @ViewChild('mvideo') mvideo;
   @ViewChild('rvideo') rvideo;
@@ -18,7 +22,8 @@ export class MeetingComponent implements OnInit {
 
   constructor(private authService : AuthService,
     private router : Router,
-    private mtService : MeetingService) { }
+    private mtService : MeetingService,
+    private route : ActivatedRoute) { }
 
   changeVideo(){
     this.mtService.changeVideo();
@@ -27,6 +32,7 @@ export class MeetingComponent implements OnInit {
   changeAudio(){
     this.mtService.changeAudio();
   }
+
   end(){
     if(confirm("Sure to leave Meeting")){
       this.router.navigate(['/user']);
@@ -34,6 +40,18 @@ export class MeetingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.mtService.meetingsChanged.subscribe(
+      meetings => {
+        this.meetings = meetings;
+      });
+
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = +params['id'];
+        console.log(this.id);
+      }
+    );
 
   }
 
@@ -47,7 +65,14 @@ export class MeetingComponent implements OnInit {
       alert("Please Login to Host Meeting");
       this.router.navigate(['/home']);
     } else {
-      this.mtService.createNewMeeting(this.mtService.generateMeetingId(), this.rvideo,this.mvideo);
+      if(this.id){
+        this.meetings = this.mtService.meetings;
+        var meeting = this.meetings[this.id];
+        this.mtService.createNewMeeting(meeting.meeting.meetingId,this.rvideo,this.mvideo);
+      }else{
+        this.meetingId = this.mtService.generateMeetingId();
+        this.mtService.createNewMeeting(this.meetingId, this.rvideo, this.mvideo);
+      }
     }
   }
 

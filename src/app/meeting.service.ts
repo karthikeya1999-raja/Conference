@@ -15,8 +15,6 @@ export class MeetingService{
   peer: Peer;
   rmsg = new Subject<string>();
   mdconn: MediaConnection;
-  video = true;
-  audio = true;
   videoTrack : MediaStreamTrack;
   audioTrack : MediaStreamTrack;
 
@@ -29,10 +27,6 @@ export class MeetingService{
     private athService : AuthService){}
 
 
-  getMeeting(id : number){
-    return this.meetings[id];
-  }
-
   generateMeetingId() {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -41,6 +35,10 @@ export class MeetingService{
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+  }
+
+  getMeeting(id : number){
+    return this.meetings[id];
   }
 
   updateMeeting(meeting : Meeting,id : number){
@@ -94,15 +92,6 @@ export class MeetingService{
     });
   }
 
-
-  getVideo(){
-    return this.video;
-  }
-
-  getAudio(){
-    return this.audio;
-  }
-
   changeVideo(){
     this.videoTrack.enabled = !this.videoTrack.enabled;
   }
@@ -111,16 +100,16 @@ export class MeetingService{
     this.audioTrack.enabled = !this.audioTrack.enabled;
   }
 
-  joinMeeting(receiver: string, mref: any, rref : any) {
+  joinMeeting(receiver: string,name : string, mref: any, rref : any) {
 
     console.log("Entered makeCall function");
     var n = <any>navigator;
 
-    var peer = new Peer(this.generateMeetingId(), { host: 'localhost', port: 9000, path: '/' });
+    var peer = new Peer(name, { host: 'localhost', port: 9000, path: '/' });
     this.peer = peer;
 
     n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
-    n.getUserMedia({ video: this.getVideo(), audio: this.getAudio() }, (stream : MediaStream) => {
+    n.getUserMedia({ video: true, audio: true }, (stream : MediaStream) => {
 
 
       this.audioTrack = stream.getTracks()[0];
@@ -154,39 +143,38 @@ export class MeetingService{
     var peer = new Peer(meetingId,{ host: 'localhost', port: 9000, path: '/' });
     this.peer = peer;
 
-    peer.on('call', (call) => {
+    var n = <any>navigator
+    n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
+    n.getUserMedia({ video: true, audio: true }, (stream: MediaStream) => {
 
+      this.audioTrack = stream.getTracks()[0];
+      this.videoTrack = stream.getTracks()[1];
 
-      if (confirm(call.peer + " is requesting to join meeting")){
+      console.log(stream.getTracks());
 
-        var n = <any>navigator
-        n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
-        n.getUserMedia({ video: this.getVideo(), audio: this.getAudio() }, (stream : MediaStream) => {
+      var vedio = mref.nativeElement;
+      vedio.srcObject = stream;
+      vedio.play();
 
+      peer.on('call', (call) => {
 
-          this.audioTrack = stream.getTracks()[0];
-          this.videoTrack = stream.getTracks()[1];
-
-          console.log(stream.getTracks());
+        if(confirm(call.peer+" is requesting to join meeting")){
 
           call.answer(stream);
-          var vedio = mref.nativeElement;
-          vedio.srcObject = stream;
-          vedio.play();
 
-              call.on('stream', (remoteStream) => {
+          call.on('stream', (remoteStream) => {
 
-                this.mdconn = call;
+            this.mdconn = call;
 
-                var vedio = rref.nativeElement
-                vedio.srcObject = remoteStream;
-                vedio.play();
+            var vedio = rref.nativeElement
+            vedio.srcObject = remoteStream;
+            vedio.play();
 
-              });
-          }, (err) => {
-            console.error('Failed to get local stream', err);
           });
-      }
+        }
+      });
+    }, (err) => {
+      console.error('Failed to get local stream', err);
     });
   }
 }
