@@ -17,6 +17,10 @@ export class MeetingService{
   mdconn: MediaConnection;
   videoTrack : MediaStreamTrack;
   audioTrack : MediaStreamTrack;
+  peerList = [];
+  currentPeer;
+  myStream;
+  vedio;
 
   meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
   userEmail : string;
@@ -108,8 +112,7 @@ export class MeetingService{
     var peer = new Peer(name, { host: 'localhost', port: 9000, path: '/' });
     this.peer = peer;
 
-    n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
-    n.getUserMedia({ video: true, audio: true }, (stream : MediaStream) => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream: MediaStream) => {
 
 
       this.audioTrack = stream.getTracks()[0];
@@ -119,23 +122,28 @@ export class MeetingService{
 
       const call = peer.call(receiver, stream);
 
-      var vedio = mref.nativeElement;
-      vedio.srcObject = stream;
-      vedio.play();
+      this.myStream = stream;
+      this.addStream(mref,stream);
 
-        call.on('stream', (remoteStream) => {
+      call.on('stream', (remoteStream) => {
 
-          this.mdconn = call;
+         if(!this.peerList.includes(call.peer)){
 
-          var vedio = rref.nativeElement
-          vedio.srcObject = remoteStream;
-          vedio.play();
+           this.mdconn = call;
+           this.addStream(rref, remoteStream);
+           this.currentPeer = call.peerConnection;
+           this.peerList.push(call.peer);
+         }
+      });
 
-        })
-    }, (err) => {
+      call.on('close', ()=>{
+        peer.disconnect();
+        peer.destroy();
+      })
+    }).catch((err) => {
       console.error('Failed to get local stream', err);
-    });
-  }
+  })
+}
 
   createNewMeeting(meetingId : string,rref: any,mref : any) {
     console.log("Entered answer ",meetingId);
@@ -143,38 +151,88 @@ export class MeetingService{
     var peer = new Peer(meetingId,{ host: 'localhost', port: 9000, path: '/' });
     this.peer = peer;
 
-    var n = <any>navigator
-    n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
-    n.getUserMedia({ video: true, audio: true }, (stream: MediaStream) => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream: MediaStream) => {
 
       this.audioTrack = stream.getTracks()[0];
       this.videoTrack = stream.getTracks()[1];
 
       console.log(stream.getTracks());
 
-      var vedio = mref.nativeElement;
-      vedio.srcObject = stream;
-      vedio.play();
+      this.myStream = stream;
+      this.addStream(mref,stream);
 
       peer.on('call', (call) => {
 
-        if(confirm(call.peer+" is requesting to join meeting")){
+        if (confirm(call.peer + " is requesting to join meeting")) {
 
           call.answer(stream);
 
           call.on('stream', (remoteStream) => {
 
+            if(!this.peerList.includes(call.peer)){
+
             this.mdconn = call;
-
-            var vedio = rref.nativeElement
-            vedio.srcObject = remoteStream;
-            vedio.play();
-
+            this.addStream(rref,remoteStream);
+            this.currentPeer = call.peerConnection;
+            this.peerList.push(call.peer);
+             }
           });
+
+          call.on('close', ()=>{
+              peer.disconnect();
+              peer.destroy();
+          })
         }
       });
-    }, (err) => {
+    }).catch((err) => {
       console.error('Failed to get local stream', err);
     });
   }
+
+  endCall(){
+    this.mdconn.close();
+    this.peerList = [];
+  }
+
+  addStream(ref : any, remoteStream : MediaStream){
+    this.vedio = ref.nativeElement
+    this.vedio.srcObject = remoteStream;
+    this.vedio.play();
+  }
+
+  screenShare(){
+    var n = <any>navigator;
+    n.mediaDevices.getDisplayMedia(
+      {video :
+        {
+          cursor:"always"
+        },
+       audio :
+      {
+        echoCancellation: true,
+        noiseSuppression: true
+      }
+    }).then((stream : MediaStream) => {
+      let videoTrack = stream.getVideoTracks()[0];
+      videoTrack.onended = () => {
+        this.stopScreenShare();
+      }
+      let sender = this.currentPeer.getSenders().find((s) => {
+        return s.track.kind == videoTrack.kind;
+      })
+      sender.replaceTrack(videoTrack);
+    }).catch((err) => {
+      console.log("Unable to get display media "+err);
+    })
+  }
+
+
+  stopScreenShare(){
+    let videoTrack = this.myStream.getVideoTracks()[0];
+    var sender = this.currentPeer.getSenders().find((s) => {
+      return s.track.kind == videoTrack.kind;
+    });
+    sender.replaceTrack(videoTrack);
+  }
+
 }

@@ -35,6 +35,17 @@ export class HomeComponent implements OnInit {
 
   end(){
     if (confirm("Sure to leave Meeting !?")){
+
+      this.mtService.endCall();
+      document.getElementById('mvideo').style.display = "none";
+      document.getElementById('rvideo').style.display = "none";
+      document.getElementById('ssbtn').style.display = "none";
+      document.getElementById('btn1').style.display = "none";
+      document.getElementById('btn2').style.display = "none";
+      document.getElementById('btn3').style.display = "none";
+      document.getElementById('home').style.display = "block";
+      this.mvideo.nativeElement.srcObject = null;
+      this.rvideo.nativeElement.srcObject = null;
       if(this.isLogin){
         this.router.navigate(['/user']);
       }else{
@@ -51,6 +62,7 @@ export class HomeComponent implements OnInit {
     if (name.length != 0) {
       document.getElementById('mvideo').style.display = "block";
       document.getElementById('rvideo').style.display = "block";
+      document.getElementById('ssbtn').style.display = "inline-block";
       document.getElementById('btn1').style.display = "inline-block";
       document.getElementById('btn2').style.display = "inline-block";
       document.getElementById('btn3').style.display = "inline-block";
@@ -59,6 +71,10 @@ export class HomeComponent implements OnInit {
     } else {
       alert("You must Enter your name");
     }
+  }
+
+  shareScreen(){
+    this.mtService.screenShare();
   }
 
   scheduleMeeting(){

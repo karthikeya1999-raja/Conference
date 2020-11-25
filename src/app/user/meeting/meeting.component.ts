@@ -33,8 +33,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     this.mtService.changeAudio();
   }
 
+  shareScreen(){
+    this.mtService.screenShare();
+  }
+
   end(){
     if(confirm("Sure to leave Meeting")){
+      this.mtService.endCall();
+      this.mvideo.nativeElement.srcObject = null;
+      this.rvideo.nativeElement.srcObject = null;
       this.router.navigate(['/user']);
     }
   }
