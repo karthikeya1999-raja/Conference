@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { AuthService } from './../../auth/auth.service';
 ;import { MeetingService } from './../../meeting.service';
 import { Router } from '@angular/router';
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('rvideo') rvideo;
   name : string;
   isLogin = false;
+  form : NgForm;
 
   constructor(private router : Router,
     private mtService : MeetingService,
@@ -46,6 +48,7 @@ export class HomeComponent implements OnInit {
       document.getElementById('home').style.display = "block";
       this.mvideo.nativeElement.srcObject = null;
       this.rvideo.nativeElement.srcObject = null;
+      this.form.reset();
       if(this.isLogin){
         this.router.navigate(['/user']);
       }else{
@@ -55,8 +58,10 @@ export class HomeComponent implements OnInit {
   }
 
 
-  joinMeeting(){
+  joinMeeting(form : NgForm){
 
+    this.form = form;
+    this.meetingId = form.value.metcod;
     console.log(this.meetingId);
     var name = prompt("Enter Your Name");
     if (name.length != 0) {

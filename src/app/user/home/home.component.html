@@ -47,9 +47,9 @@
 <div class="input">
   <div class="row">
     <div class="col-sm-6">
-      <form class="form-group" #mtform="ngForm" (ngSubmit)="joinMeeting()">
+      <form class="form-group" #mtform="ngForm" (ngSubmit)="joinMeeting(mtform)">
         <input type="text" id="metcod" name="metcod" placeholder="Enter Meeting Code"
-       class="form-control" [(ngModel)]="meetingId" required minlength="20" maxlength="20">
+       class="form-control" ngModel required minlength="20" maxlength="20">
       <button type="submit" class="btn btn-primary b" [disabled]="!mtform.valid">Join Meeting</button>
       </form>
     </div>
