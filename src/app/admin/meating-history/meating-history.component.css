@@ -3,10 +3,13 @@
 }
 
 .btn-info{
-  margin-top: 3%;
   background-color: #11baee;
 }
 
 .btn-info:hover {
   background-color: #078bb3;
+}
+
+.top{
+  margin-top: 2%;
 }

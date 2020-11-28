@@ -33,7 +33,7 @@ export class UserManagementComponent implements OnInit{
         this.users[index].email,
         this.users[index].password,
         this.users[index].user);
-      //this.users.splice(index, 1);
+        this.users.splice(index, 1);
     }
   }
 
@@ -42,7 +42,6 @@ export class UserManagementComponent implements OnInit{
    this.sService.getUserInfo().subscribe(
      users =>{
        this.users = users;
-       //console.log(this.users);
      }
    );
 

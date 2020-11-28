@@ -18,3 +18,11 @@ a{
 a:hover{
   background-color: #f1f0f0;
 }
+
+.row{
+  margin-top: 3%;
+}
+
+h2{
+  text-align: center;
+}

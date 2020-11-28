@@ -100,29 +100,25 @@
 <form class="form-group" #authForm="ngForm" (ngSubmit)="submit(authForm)">
 
   <div class="row d-flex justify-content-center">
-      <div class="col-4">
-        <label for="fname">First Name</label>
-        <input type="text" name="fname" id="fname" class="form-control"
-           placeholder="First Name" ngModel required>
-     </div>
-
-     <div class="col-4">
-          <label for="lname">Last Name</label>
-          <input type="text" name="lname" id="lname" class="form-control"
-            placeholder="Last Name" ngModel required>
-     </div>
-  </div>
-
-  <div class="row d-flex justify-content-center">
-    <div class="col-6">
-      <label for="email">Email</label>
-        <input type="email" name="email" id="email" class="form-control"
-         placeholder="Email" required ngModel>
+    <div class="col-5">
+      <label for="fname">First Name</label>
+      <input type="text" name="fname" id="fname" class="form-control"
+        placeholder="First Name" ngModel required>
+    </div>
+    <div class="col-5">
+      <label for="lname">Last Name</label>
+      <input type="text" name="lname" id="lname" class="form-control"
+        placeholder="Last Name" ngModel required>
     </div>
   </div>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-6">
+    <div class="col-5">
+      <label for="email">Email</label>
+        <input type="email" name="email" id="email" class="form-control"
+         placeholder="Email" required ngModel>
+    </div>
+    <div class="col-5">
       <label for="pass">Password</label>
       <input type="password" id="pass" name="password" class="form-control"
            placeholder="Password" minlength="6" required ngModel>
@@ -130,7 +126,7 @@
   </div>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-6">
+    <div class="col-5">
        <label for="conpass">Confirm Password</label>
       <input type="password" id="conpass" name="conpass" class="form-control"
           placeholder="Confirm Password" minlength="6" required ngModel>

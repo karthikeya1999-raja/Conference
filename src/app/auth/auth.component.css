@@ -2,16 +2,15 @@ label{
   font-weight: 600;
 }
 
+h2{
+  text-align: center;
+}
+
 .col-12,
-.col-6,
+.col-5,
 .col-2,
 .col-10{
   margin-top: 1.5%;
-}
-
-.col-4{
-  margin-right: 8%;
-  margin-left: 8%;
 }
 
 small{

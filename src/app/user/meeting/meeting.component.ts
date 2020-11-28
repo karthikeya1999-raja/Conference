@@ -73,7 +73,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/home']);
     } else {
       if(this.id){
-        this.meetings = this.mtService.meetings;
+        this.meetings = this.mtService.mmeetings;
         var meeting = this.meetings[this.id];
         this.mtService.createNewMeeting(meeting.meeting.meetingId,this.rvideo,this.mvideo);
       }else{

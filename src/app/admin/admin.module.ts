@@ -6,13 +6,15 @@ import { MeatingHistoryComponent } from './meating-history/meating-history.compo
 import { DashbordComponent } from './dashbord/dashbord.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DashHeadComponent } from './dash-head/dash-head.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     DashbordComponent,
     MeatingHistoryComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    DashHeadComponent
   ],
   imports: [
     CommonModule,
