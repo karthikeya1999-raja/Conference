@@ -87,6 +87,11 @@ export class MeetingService{
           key.status = "Ended";
         }
       }
+      for(var i=0;i<this.umeetings.length;i++){
+        var darray = this.umeetings[i].meeting.mdate.split("-");
+        var drarray = darray.reverse();
+        this.umeetings[i].meeting.mdate = drarray.join("-");
+      }
       this.meetingsChanged.next(this.umeetings);
     });
   }
@@ -114,6 +119,11 @@ export class MeetingService{
         } else {
           key.status = "Ended";
         }
+      }
+      for (var i = 0; i < this.mmeetings.length; i++) {
+        var darray = this.mmeetings[i].meeting.mdate.split("-");
+        var drarray = darray.reverse();
+        this.mmeetings[i].meeting.mdate = drarray.join("-");
       }
       this.meetingsChanged.next(this.mmeetings);
     });

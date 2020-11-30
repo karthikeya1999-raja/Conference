@@ -4,12 +4,12 @@
     <div class="col-4">
        <button class="btn btn-info" (click)=back()><span class="fas fa-arrow-left"></span></button>
     </div>
-    <div class="col-8">
+    <div class="col-4 d-flex justify-content-center">
       <h3>User Management</h3>
     </div>
   </div>
 
-  <table class="table table-hover table-striped">
+  <table class="table table-hover table-striped" *ngIf="!isLoading">
   <thead>
     <tr>
       <th>Sl No</th>
@@ -26,5 +26,11 @@
     </tr>
   </tbody>
 </table>
+
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only"></span>
+  </div>
+</div>
 
 </div>

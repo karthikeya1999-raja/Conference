@@ -14,8 +14,11 @@ import { Component, OnInit } from '@angular/core';
 export class DashbordComponent implements OnInit {
 
   isAdmin = false;
-  isLoading;
+  show = false;
+  isLoading = true;
   pusers : PostUser[] = [];
+  usersCount : number;
+  meetingCount : number;
   users : { user: PostUser, meetings: { meeting: Meeting, email: string, id: string, status?: string }[] }[] = [];
   meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
 
@@ -23,6 +26,22 @@ export class DashbordComponent implements OnInit {
     private router : Router,
     private sService : StorageService,
     private mtService : MeetingService) { }
+
+  sort(){
+    for (var i = 0; i < this.users.length; i++) {
+      for(var j=i+1;j<this.users.length;j++){
+        if (this.users[i].user.name.toLowerCase() > this.users[j].user.name.toLowerCase()) {
+          var user = this.users[i];
+          this.users[i] = this.users[j];
+          this.users[j] = user;
+        }
+      }
+    }
+  }
+
+  showUsers(){
+    this.show = !this.show;
+  }
 
   ngOnInit(): void {
 
@@ -37,24 +56,23 @@ export class DashbordComponent implements OnInit {
        this.router.navigate(['/user']);
     }else{
 
-      this.isLoading = true;
       this.sService.getUserInfo().subscribe(
         users => {
-          this.pusers = users;
+          this.usersCount = users.length;
           this.mtService.getUserMeetings();
           this.mtService.meetingsChanged.subscribe(
             mtngs => {
-              this.meetings = mtngs;
-              for(let user of this.pusers){
+              this.meetingCount = mtngs.length;
+              for(let user of users){
                 var meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
-                for(let meeting of this.meetings){
+                for(let meeting of mtngs){
                   if(user.email == meeting.email){
                     meetings.push(meeting);
                   }
                 }
                 this.users.push({user,meetings})
               }
-              console.log(this.users);
+              this.sort();
             }
           );
           this.isLoading = false;

@@ -12,7 +12,7 @@ import { StorageService } from '../../storage.service';
 export class UserManagementComponent implements OnInit{
 
   isAdmin = false;
-
+  isLoading = true;
   users : PostUser[]= [];
 
   constructor(private sService : StorageService,
@@ -37,11 +37,25 @@ export class UserManagementComponent implements OnInit{
     }
   }
 
+  sort(){
+    for (var i = 0; i < this.users.length; i++) {
+      for (var j = i + 1; j < this.users.length; j++) {
+        if (this.users[i].name.toLowerCase() > this.users[j].name.toLowerCase()) {
+          var user = this.users[i];
+          this.users[i] = this.users[j];
+          this.users[j] = user;
+        }
+      }
+    }
+    this.isLoading = false;
+  }
+
   ngOnInit(): void {
 
    this.sService.getUserInfo().subscribe(
      users =>{
        this.users = users;
+       this.sort();
      }
    );
 

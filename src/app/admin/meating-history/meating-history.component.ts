@@ -12,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 export class MeatingHistoryComponent implements OnInit {
 
   isAdmin = false;
-  meetings : {meeting:Meeting,email:string,id:string,status?:string}[] = []
+  isLoading = true;
+  meetings : {meeting:Meeting,email:string,id:string,status?:string}[] = [];
 
   constructor(private authService : AuthService,
     private router : Router,
@@ -23,22 +24,13 @@ export class MeatingHistoryComponent implements OnInit {
     this.router.navigate(['../'],{relativeTo: this.route});
   }
 
-  toNumberArray(arr : string[]){
-    var numArray : number[] = [];
-    for(const key of arr){
-      numArray.push(parseInt(key,10));
-    }
-    return numArray;
+  IsAdmin(email : string){
+    return email == 'karthikeya.hosahalli.1999@gmail.com'||
+      email == 'meghubhat06@gmail.com'||
+      email == 'krishnaprasadnr2017@gmail.com';
   }
 
   ngOnInit(): void {
-
-    this.mtService.getUserMeetings();
-    this.mtService.meetingsChanged.subscribe(
-      meetings => {
-        this.meetings = meetings;
-      }
-    );
 
     this.authService.isAdmin.subscribe(
       admin => {
@@ -48,6 +40,13 @@ export class MeatingHistoryComponent implements OnInit {
 
     if(!this.isAdmin){
       this.router.navigate(['/home']);
+    }else{
+      this.mtService.getUserMeetings();
+      this.mtService.meetingsChanged.subscribe(
+        meetings => {
+          this.meetings = meetings;
+          this.isLoading = false;
+        });
     }
   }
 

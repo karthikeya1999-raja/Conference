@@ -1,13 +1,13 @@
 .x{
-  width: 250px;
+  width: 20%;
 }
 
 .y{
-  width: 350px;
+  width: 30%;
 }
 
 .a{
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
 a{
@@ -20,9 +20,17 @@ a:hover{
 }
 
 .row{
-  margin-top: 3%;
+  margin-top: 2%;
 }
 
 h2{
   text-align: center;
+}
+
+h6.c{
+  text-align: center;
+}
+
+button{
+  width: 100%;
 }

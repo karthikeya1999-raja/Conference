@@ -15,6 +15,7 @@ export class ScheduleMeetingComponent implements OnInit {
   isLogin = false;
   userEmail : string;
   scheduling = false;
+  isLoading = true;
   meetings : {meeting:Meeting,email:string,id:string,status?:string}[] = [];
 
   constructor(private athService : AuthService,
@@ -56,6 +57,7 @@ export class ScheduleMeetingComponent implements OnInit {
     this.mtService.getMyScheduleInfo();
     this.mtService.meetingsChanged.subscribe(meetings => {
       this.meetings = meetings;
+      this.isLoading = false;
     });
 
     this.athService.user.subscribe(

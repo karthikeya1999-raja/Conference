@@ -61,7 +61,7 @@ export class AuthService {
       var found = true;
       if(admin){
         for(var i=0;i<this.admins.length;i++){
-          if(email == this.admins[i].Email){
+          if(email == this.admins[i].Email && password == this.admins[i].Password){
             found = true;
             admin = true;
             this.isAdmin.next(found);
@@ -107,10 +107,13 @@ export class AuthService {
 
     }
 
+    getAdmins(){
+      return this.admins;
+    }
+
     fetchAdmins(){
       return this.http.get<any[]>('https://samachar-b2961.firebaseio.com/Admin.json')
       .pipe(map(admins => {
-        //console.log(admins);
         this.admins = admins;
       }));
     }

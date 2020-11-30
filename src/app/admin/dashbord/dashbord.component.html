@@ -1,20 +1,45 @@
 <div class="container">
 
-  <div class="row" *ngIf="!isLoading">
-    <div class="col-12">
-      <h2>Users Info</h2>
+  <div *ngIf="!isLoading">
+
+    <div class="row">
+      <div class="col-12">
+        <h2>Users Info</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="jumbotron">
+          <h6 class="c">No of Users : {{usersCount}}</h6>
+          <h6 class="c">Total Meeting Scheduled : {{meetingCount}}</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-2">
+        <button class="btn btn-primary" type="button" (click)=showUsers()>{{show == false ? 'Show Users' : 'Hide Users'}}</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="isLoading" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only"></span>
     </div>
   </div>
 
-  <div class="row">
-    <div *ngFor="let user of users" class="col-4">
-      <div class="card" style="width:80%;">
-        <img class="card-img-top" src="assets/img_avatar3.jpg" alt="Card image">
+  <div class="row" *ngIf="show">
+    <div *ngFor="let user of users; let i = index" class="col-3 d-flex justify-content-center">
+      <div class="card" style="height:97%" *ngIf="i<8">
+        <img class="card-img-top" src="assets/user1.jpg" alt="Card image">
         <div class="card-body">
-          <h4 class="card-title">{{user.user.name}}</h4>
-          <h6 class="card-title">{{user.user.email}}</h6>
+          <h4 class="card-title">{{user.user.name | slice : 0 : 20}}{{user.user.name.length > 20 ? '...':''}}</h4>
+          <h6 class="card-title">{{user.user.email | slice : 0 : 20}}{{user.user.email.length > 20 ? '...':''}}</h6>
           <p class="card-text">Scheduled meetings : {{user.meetings.length}}</p>
-          <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
+          <!-- <a class="btn btn-primary d-flex justify-content-center">See Usage</a> -->
         </div>
       </div>
     </div>
