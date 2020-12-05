@@ -13,6 +13,10 @@ button.a{
   margin-top: 30%;
 }
 
+.bt{
+  margin-right: 6%;
+}
+
 .button{
   position: absolute;
   bottom: 20%;
