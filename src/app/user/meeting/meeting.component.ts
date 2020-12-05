@@ -56,7 +56,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        console.log(this.id);
       }
     );
 

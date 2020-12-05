@@ -47,7 +47,8 @@ export class MeetingEditComponent implements OnInit {
 
     if (this.editMode) {
       const meeting = this.meeting;
-      mDate = meeting.meeting.mdate;
+      console.log(meeting.meeting.mdate)
+      mDate = meeting.meeting.mdate.split('-').reverse().join('-');
       mTime = meeting.meeting.time;
       mDuration = meeting.meeting.duration;
       mTopic = meeting.meeting.topic;
