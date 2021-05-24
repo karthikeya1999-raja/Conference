@@ -1,0 +1,11 @@
+nmp install peerjs --save
+
+run above command to install peerjs module
+
+npm install peer
+
+run above command to install peer
+
+npx peerjs --port 9000
+
+run above command to run the peer server locally.
