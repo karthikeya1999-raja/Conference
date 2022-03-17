@@ -33,7 +33,7 @@ export class AuthService {
           this.name = res.user.displayName;
           return res;
         }, err => {
-          console.log(err);
+          //console.log(err);
           reject(err);
         })
       });
@@ -49,7 +49,7 @@ export class AuthService {
             this.name = res.user.displayName;
             return res;
           }, err => {
-            console.log(err);
+            //console.log(err);
             reject(err);
           })
       });
@@ -73,12 +73,12 @@ export class AuthService {
       }
       if(found){
         return this.afAuth.signInWithEmailAndPassword(email,password).then(x => {
-          console.log("Signin Success",x);
+          //console.log("Signin Success",x);
           this.user.next(true);
           return admin;
         }).catch(error => {
           alert("You are not a user....\nPlease SignUp!!");
-          console.log("Signin Failed",error);
+          //console.log("Signin Failed",error);
         });
       }
       else{
@@ -89,11 +89,11 @@ export class AuthService {
     signUp(email: string, password: string){
       this.email = email;
        return this.afAuth.createUserWithEmailAndPassword(email,password).then(x => {
-         console.log("signUp Success",x);
+         //console.log("signUp Success",x);
          this.user.next(true);
          return x.user;
        }).catch(error => {
-         console.log("SignUp failed",error);
+         //console.log("SignUp failed",error);
        });
     }
 
@@ -102,7 +102,7 @@ export class AuthService {
       this.afAuth.signOut().then(() => {
         this.user.next(false);
         this.isAdmin.next(false);
-        console.log("Logout Success");
+        //console.log("Logout Success");
       });
 
     }

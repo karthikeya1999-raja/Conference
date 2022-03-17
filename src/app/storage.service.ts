@@ -91,4 +91,5 @@ export class StorageService {
   deleteUSerSchedule(id : string){
     return this.http.delete('https://samachar-b2961.firebaseio.com/meetings/'+id+'.json');
   }
+  
 }

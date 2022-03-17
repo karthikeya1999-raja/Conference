@@ -34,11 +34,11 @@ export class AuthComponent implements OnInit {
           }
         }
         if(found){
-          console.log("Login Success");
+          //console.log("Login Success");
           this.router.navigate(['/user']);
         }else{
           this.sService.storeUserInfo(x.user.displayName,x.user.email,x.user);
-          console.log("Login Success");
+          //console.log("Login Success");
           this.router.navigate(['/user']);
         }
       });
@@ -55,11 +55,11 @@ export class AuthComponent implements OnInit {
           }
         }
         if (found) {
-          console.log("Login Success");
+          //console.log("Login Success");
           this.router.navigate(['/user']);
         } else {
           this.sService.storeUserInfo(x.user.displayName, x.user.email, x.user);
-          console.log("Login Success");
+          //console.log("Login Success");
           this.router.navigate(['/user']);
         }
       });
@@ -67,7 +67,7 @@ export class AuthComponent implements OnInit {
   }
 
   submit(form: NgForm) {
-    console.log(form);
+    //console.log(form);
     if (!form.valid)
       return;
 

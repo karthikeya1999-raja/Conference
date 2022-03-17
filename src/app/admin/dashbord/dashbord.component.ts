@@ -17,8 +17,8 @@ export class DashbordComponent implements OnInit {
   show = false;
   isLoading = true;
   pusers : PostUser[] = [];
-  usersCount : number;
-  meetingCount : number;
+  usersCount : number ;
+  meetingCount : number = 0;
   users : { user: PostUser, meetings: { meeting: Meeting, email: string, id: string, status?: string }[] }[] = [];
   meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
 
@@ -67,6 +67,7 @@ export class DashbordComponent implements OnInit {
                 var meetings: { meeting: Meeting, email: string, id: string, status?: string }[] = [];
                 for(let meeting of mtngs){
                   if(user.email == meeting.email){
+                    //this.meetingCount += 1;
                     meetings.push(meeting);
                   }
                 }

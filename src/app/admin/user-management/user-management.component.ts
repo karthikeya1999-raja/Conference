@@ -27,7 +27,7 @@ export class UserManagementComponent implements OnInit{
   deleteUser(index : number)
   {
     console.log(index);
-    if(confirm("Sure twant to delete")){
+    if(confirm("Sure to delete User??")){
       this.sService.deleteUserInfo(
         this.users[index].id,
         this.users[index].email,
