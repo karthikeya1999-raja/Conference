@@ -44,3 +44,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#custom files
+/Test.class
+/Test.java 
+/conference.rar
+/git
+/git_guide_to_commit.txt
